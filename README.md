@@ -1,7 +1,8 @@
 # Relay TodoMVC with Subscriptions on the 'AddTodoMutation'
 
-Open 2 tabs, add a todo into one tab, it is also in the other tab
-Still imperfect because it gets twice on the tab where you actually add it and counter is not updated but purpose what to show subscriptions end to end flow with up to date librairies
+Open 2 tabs, add a todo into one tab, it is also in the other tab.
+
+Implementation is still imperfect because it gets added twice on the tab where you actually add it and counter is not updated but purpose was to show subscriptions end to end flow with up to date librairies
 
 ## Installation
 
