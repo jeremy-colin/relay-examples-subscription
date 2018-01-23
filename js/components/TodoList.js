@@ -40,7 +40,6 @@ class TodoList extends React.Component {
       onError: error => console.error(error),
       onNext: response => console.log(response),
       updater: (store, data) => {
-        // need mechanism to detech who created sub
         const rootField = store.getRootField('addTodo');
         const todo = rootField.getLinkedRecord('todo');
         const viewer = store.getRoot().getLinkedRecord('viewer');

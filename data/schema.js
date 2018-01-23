@@ -281,7 +281,7 @@ const GraphQLAddTodoSubscription = subscriptionWithClientId({
   outputFields: {
     todo: { type: GraphQLTodo },
   },
-  subscribe: variables => pubSub.asyncIterator(TODO_ADDED),
+  subscribe: () => pubSub.asyncIterator(TODO_ADDED),
 });
 
 const Subscription = new GraphQLObjectType({
