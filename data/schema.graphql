@@ -9,6 +9,15 @@ type AddTodoPayload {
   clientMutationId: String
 }
 
+input AddTodoSubscriptionInput {
+  clientSubscriptionId: String
+}
+
+type AddTodoSubscriptionPayload {
+  todo: Todo
+  clientSubscriptionId: String
+}
+
 input ChangeTodoStatusInput {
   complete: Boolean!
   id: ID!
@@ -102,6 +111,10 @@ input RenameTodoInput {
 type RenameTodoPayload {
   todo: Todo
   clientMutationId: String
+}
+
+type Subscription {
+  addTodo(input: AddTodoSubscriptionInput!): AddTodoSubscriptionPayload
 }
 
 type Todo implements Node {
