@@ -88,7 +88,10 @@ const GraphQLTodo = new GraphQLObjectType({
   interfaces: [nodeInterface],
 });
 
-const { connectionType: TodosConnection, edgeType: GraphQLTodoEdge } = connectionDefinitions({
+const {
+  connectionType: TodosConnection,
+  edgeType: GraphQLTodoEdge,
+} = connectionDefinitions({
   name: 'Todo',
   nodeType: GraphQLTodo,
 });
@@ -106,7 +109,8 @@ const GraphQLUser = new GraphQLObjectType({
         },
         ...connectionArgs,
       },
-      resolve: (obj, { status, ...args }) => connectionFromArray(getTodos(status), args),
+      resolve: (obj, { status, ...args }) =>
+        connectionFromArray(getTodos(status), args),
     },
     totalCount: {
       type: GraphQLInt,
@@ -141,7 +145,8 @@ const GraphQLAddTodoMutation = mutationWithClientMutationId({
       type: GraphQLTodoEdge,
       resolve: ({ localTodoId }) => {
         const todo = getTodo(localTodoId);
-        pubSub.publish('TODO_ADDED', { todo });
+        console.log('Publishing Subscription');
+        pubSub.publish(TODO_ADDED, { todo });
         return {
           cursor: cursorForObjectInConnection(getTodos(), todo),
           node: todo,
@@ -218,7 +223,9 @@ const GraphQLRemoveCompletedTodosMutation = mutationWithClientMutationId({
   },
   mutateAndGetPayload: () => {
     const deletedTodoLocalIds = removeCompletedTodos();
-    const deletedTodoIds = deletedTodoLocalIds.map(toGlobalId.bind(null, 'Todo'));
+    const deletedTodoIds = deletedTodoLocalIds.map(
+      toGlobalId.bind(null, 'Todo')
+    );
     return { deletedTodoIds };
   },
 });

@@ -6,27 +6,26 @@ import { schema } from './data/schema';
 
 const WS_PORT = 5000;
 
-// Create WebSocket listener server
-const websocketServer = createServer((request, response) => {
-  response.writeHead(404);
-  response.end();
-});
+export default graphQLServer => {
+  // Create WebSocket listener server
+  const websocketServer = createServer(graphQLServer);
 
-// Bind it to port and start listening
-websocketServer.listen(WS_PORT, () =>
-  console.log(`Websocket Server is now running on http://localhost:${WS_PORT}`)
-);
+  // Bind it to port and start listening
+  websocketServer.listen(WS_PORT, () => {
+    console.log(
+      `Websocket Server is now running on http://localhost:${WS_PORT}`
+    );
 
-export default () => {
-  SubscriptionServer.create(
-    {
-      schema,
-      execute,
-      subscribe,
-    },
-    {
-      server: websocketServer,
-      path: '/sub',
-    }
-  );
+    new SubscriptionServer(
+      {
+        execute,
+        subscribe,
+        schema,
+      },
+      {
+        server: websocketServer,
+        path: '/sub',
+      }
+    );
+  });
 };
